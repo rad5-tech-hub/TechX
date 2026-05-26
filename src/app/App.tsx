@@ -6,7 +6,7 @@ import Problem from "./components/Problem";
 import Transformation from "./components/Transformation";
 import Tracks from "./components/Tracks";
 import LearningExperience from "./components/LearningExperience";
-import WhyRAD5 from "./components/WhyRAD5";
+import WhyRad5 from "./components/WhyRad5";
 import WhoShouldApply from "./components/WhoShouldApply";
 import ProgramBenefits from "./components/ProgramBenefits";
 import StudentExperience from "./components/StudentExperience";
@@ -30,7 +30,7 @@ export default function App() {
               <Problem />
               <Transformation />
               <Tracks />
-              <WhyRAD5 />
+              <WhyRad5 />
               <LearningExperience />
               <WhoShouldApply />
               <ProgramBenefits />

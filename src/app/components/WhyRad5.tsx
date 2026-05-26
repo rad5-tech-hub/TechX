@@ -1,7 +1,7 @@
 import { differentiators } from "../data";
 import { PANEL, BLUE, NAVY, MUTED } from "../constants";
 
-export default function WhyRAD5() {
+export default function WhyRad5() {
   return (
     <section className="py-24 border-y border-border" style={{ backgroundColor: PANEL }} id="why">
       <div className="max-w-6xl mx-auto px-4">
