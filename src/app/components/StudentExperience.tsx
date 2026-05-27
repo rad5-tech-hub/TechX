@@ -1,6 +1,7 @@
 import { CheckCircle } from "lucide-react";
 import { experience } from "../data";
 import { PANEL, BLUE, MUTED, FG } from "../constants";
+import students from "../../assets/students.jpg";
 
 export default function StudentExperience() {
   return (
@@ -9,7 +10,7 @@ export default function StudentExperience() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative rounded-2xl overflow-hidden" style={{ aspectRatio: "4/3" }}>
             <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&h=680&fit=crop&auto=format"
+              src={students}
               alt="RAD5 TechX cohort collaborating"
               className="w-full h-full object-cover"
             />
