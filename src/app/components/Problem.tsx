@@ -4,7 +4,7 @@ export default function Problem() {
   const pains = [
     {
       title: "Applications that go nowhere.",
-      desc: "You have sent 50 job applications. You've heard almost nothing. The problem is not your skills — it's how you present and position them. Certificates alone do not get you hired.",
+      desc: "You have sent 50 job applications. You've heard almost nothing. The problem is not your skills,it's how you present and position them. Certificates alone do not get you hired.",
     },
     {
       title: "Certificates without confidence.",
