@@ -12,6 +12,7 @@ import ProgramBenefits from "./components/ProgramBenefits";
 import StudentExperience from "./components/StudentExperience";
 import Tuition from "./components/Tuition";
 import Testimonials from "./components/Testimonials";
+import ApplicationTimeline from "./components/ApplicationTimeline";
 import FAQ from "./components/FAQ";
 import FinalCTA from "./components/FinalCTA";
 import Footer from "./components/Footer";
@@ -37,6 +38,7 @@ export default function App() {
               <StudentExperience />
               <Tuition />
               <Testimonials />
+              <ApplicationTimeline />
               <FAQ />
               <FinalCTA />
             </>
