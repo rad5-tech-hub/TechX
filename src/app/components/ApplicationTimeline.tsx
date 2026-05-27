@@ -55,8 +55,8 @@ const ApplicationTimeline = () => {
                   {index + 1}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                  <p className="text-foreground/70 leading-relaxed">
+                  <h3 className="text-md lg:text-xl font-bold mb-2">{step.title}</h3>
+                  <p className="text-foreground/70 leading-relaxed text-xs lg:text-base">
                     {step.description}
                   </p>
                 </div>
