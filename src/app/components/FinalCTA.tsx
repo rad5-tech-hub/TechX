@@ -32,7 +32,7 @@ function FinalCTA() {
         </h2>
 
         <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.72)" }}>
-          50 scholarship slots. 12 transformative weeks. One decision that could change everything. This is your moment.
+          Limited slots. 12 transformative weeks. One decision that could change everything. This is your moment.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">

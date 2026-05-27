@@ -55,7 +55,7 @@ export default function WhoShouldApply() {
               style={{ backgroundColor: "rgba(26,75,181,0.07)", border: "1px solid rgba(26,75,181,0.18)" }}
             >
               <p className="text-sm" style={{ color: MUTED }}>
-                If you are not quite ready yet — finish a foundational course first, then come back. We will be here.
+                If you are not quite ready yet, finish a foundational course first, then come back. We will be here.
               </p>
             </div>
           </div>

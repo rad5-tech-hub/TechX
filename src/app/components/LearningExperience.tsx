@@ -18,7 +18,7 @@ export default function LearningExperience() {
               12 Weeks of Focused,<br />High-Impact Learning.
             </h2>
             <p className="mt-4 text-sm leading-relaxed" style={{ color: MUTED }}>
-              Every touchpoint of the RAD5 TechX experience is designed to push you further than you thought possible — with the support structures to make sure you succeed.
+              Every touchpoint of the RAD5 TechX Graduate Program experience is designed to push you further than you thought possible, with the support structures to make sure you succeed.
             </p>
             <a
               href="/apply"

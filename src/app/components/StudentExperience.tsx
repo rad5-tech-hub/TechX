@@ -22,14 +22,14 @@ export default function StudentExperience() {
                 "Small cohort. Deep relationships. Real results."
               </p>
               <p className="text-xs mt-1" style={{ color: MUTED }}>
-                — RAD5 TechX Core Principle
+                — RAD5 TechX Graduate Program Core Principle
               </p>
             </div>
             <div
               className="absolute top-6 left-6 px-3 py-1 rounded-full text-xs font-bold text-white"
               style={{ backgroundColor: BLUE }}
             >
-              Cohort 1 · 2025
+              Past Cohort · 2025
             </div>
           </div>
 
@@ -44,7 +44,7 @@ export default function StudentExperience() {
               More Than a Program.<br />An Experience.
             </h2>
             <p className="mt-4 text-sm leading-relaxed mb-8" style={{ color: MUTED }}>
-              From Day 1 to Demo Day, you are fully supported — with the materials, community, and access you need to succeed.
+              From Day 1 to Demo Day, you are fully supported, with the materials, community, and access you need to succeed.
             </p>
             <ul className="space-y-4">
               {experience.map((item, i) => (

@@ -11,8 +11,7 @@ function Footer() {
           <div>
             <ImageWithFallback src={rad5Logo} alt="RAD5 Tech Hub" className="h-12 w-auto object-contain mb-4" />
             <p className="text-sm leading-relaxed" style={{ color: MUTED }}>
-              Innovation at the Speed of Light.<br />
-              Abia, Nigeria.
+             A premium 12-week career acceleration program that helps entry-level tech talents transition into confident, globally competitive, job-ready professionals.
             </p>
           </div>
 

@@ -28,7 +28,7 @@ export default function Transformation() {
             className="mt-3 text-[clamp(2.2rem,5vw,3.5rem)] font-black text-white"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
           >
-            Before vs. After<br />RAD5 TechX
+            Before vs. After<br />RAD5 TechX Graduate Program
           </h2>
         </div>
 

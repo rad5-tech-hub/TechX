@@ -60,7 +60,7 @@ export default function Hero() {
 
           {/* Subheadline */}
           <p className="max-w-lg text-base sm:text-lg leading-relaxed mb-10" style={{ color: MUTED }}>
-            RAD5 TechX is a 12-week graduate acceleration program that turns skilled-but-stuck tech learners into confident, industry-ready professionals — with real projects, deep mentorship, and career positioning that actually works.
+            RAD5 TechX Graduate Program is a premium 12-week career acceleration program that helps entry-level tech talents transition into confident, globally competitive, job-ready professionals through practical business execution, mentorship, startup exposure, and career positioning.
           </p>
 
           {/* CTAs */}
@@ -84,7 +84,6 @@ export default function Hero() {
           {/* Stats */}
           <div className="flex flex-wrap gap-x-12 gap-y-5 lg:pb-8">
             {[
-              { v: "10+", l: "Years Industry Experience" },
               { v: "15", l: "Seats Max Per Track" },
               { v: "50%", l: "Scholarship Available" },
               { v: "5", l: "Specialized Tracks" },

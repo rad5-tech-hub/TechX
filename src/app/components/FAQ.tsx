@@ -28,7 +28,7 @@ function FAQ() {
               style={{ backgroundColor: PANEL, borderColor: "rgba(26,75,181,0.3)" }}
             >
               <p className="text-sm mb-4" style={{ color: MUTED }}>
-                Still have questions? Reach out directly — we respond within 24 hours.
+                Still have questions? Reach out directly, we respond within 24 hours.
               </p>
               <a
                 href="mailto:admin@rad5.com.ng"

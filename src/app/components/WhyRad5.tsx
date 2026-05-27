@@ -7,7 +7,7 @@ export default function WhyRad5() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="text-xs font-bold uppercase tracking-widest" style={{ color: BLUE }}>
-            Why RAD5 TechX
+            Why RAD5 TechX Graduate Program
           </span>
           <h2
             className="mt-3 text-[clamp(2.2rem,5vw,3.5rem)] font-black text-white"

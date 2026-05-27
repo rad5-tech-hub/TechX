@@ -83,12 +83,12 @@ export const tracks = [
 ];
 
 export const differentiators = [
-  { icon: Award, title: "Not a Bootcamp. A Graduate Program.", desc: "This is what comes after the bootcamp. We don't teach basics — we transform people who know basics into professionals who execute, lead, and earn." },
-  { icon: Users, title: "Real Mentorship. Not Pre-Recorded Videos.", desc: "Direct, regular access to industry professionals with 10+ years of building real products and companies. Your mentor knows your name." },
+  { icon: Award, title: "Not a Bootcamp. A Graduate Program.", desc: "This is what comes after the bootcamp. We don't teach basics, we transform people who know basics into professionals who execute, lead, and earn." },
+  { icon: Users, title: "Real Mentorship. Not Pre-Recorded Videos.", desc: "Direct, regular access to industry professionals with 5+ years of building real products and companies. Your mentor knows your name." },
   { icon: Target, title: "Small Cohort. Deep Impact.", desc: "10–15 participants per track. You receive focused attention, direct feedback, and genuine relationships that last beyond graduation." },
   { icon: Zap, title: "Execution Over Theory.", desc: "Every week involves building, presenting, and iterating. No passive consumption. If you can't demonstrate it, we haven't done our job." },
   { icon: Globe, title: "Industry Exposure Built In.", desc: "Guest sessions with working professionals, site visits to real companies, and a Demo Day where you present to actual industry panels." },
-  { icon: TrendingUp, title: "Career Positioning That Works.", desc: "LinkedIn optimization, personal brand strategy, portfolio reviews, and job-readiness support are core curriculum — not afterthoughts." },
+  { icon: TrendingUp, title: "Career Positioning That Works.", desc: "LinkedIn optimization, personal brand strategy, portfolio reviews, and job-readiness support are core curriculum, not afterthoughts." },
 ];
 
 export const learningItems = [
@@ -122,7 +122,7 @@ export const experience = [
 ];
 
 export const shouldApply = [
-  "You've completed a bootcamp or government program (3MTT, TechRise, Abia Tech Hub, etc.)",
+  "You've completed a bootcamp or government program (3MTT, TechRise, Tech Hub Bootcamps, etc.)",
   "You're self-taught and genuinely ready to go beyond tutorials",
   "You have basic skills but haven't built anything production-grade",
   "You're applying for jobs but not getting real traction",
@@ -168,11 +168,11 @@ export const testimonials = [
 ];
 
 export const faqs = [
-  { q: "I already learned tech skills. Why should I join RAD5 TechX?", a: "Because learning and executing are two very different things. Most programs teach concepts — RAD5 TechX teaches you to apply them at industry level, build real systems, and position yourself for the career you want. If you know the basics, this is exactly what comes next." },
-  { q: "What if I'm not confident enough?", a: "Confidence is what we build here. You don't need to arrive confident — you need to arrive committed. Our curriculum progressively moves you from uncertainty to clarity through real projects, direct mentorship, and structured execution." },
+  { q: "I already learned tech skills. Why should I join RAD5 TechX Graduate Program?", a: "Because learning and executing are two very different things. Most programs teach concepts, RAD5 TechX Graduate Program teaches you to apply them at industry level, build real systems, and position yourself for the career you want. If you know the basics, this is exactly what comes next." },
+  { q: "What if I'm not confident enough?", a: "Confidence is what we build here. You don't need to arrive confident, you need to arrive committed. Our curriculum progressively moves you from uncertainty to clarity through real projects, direct mentorship, and structured execution." },
   { q: "Is this program beginner-friendly?", a: "RAD5 TechX is a graduate-level acceleration program, not a beginner bootcamp. You should have completed at least one foundational tech program or have equivalent self-taught experience before applying." },
-  { q: "Will I actually build real projects?", a: "Yes — every track is built around real project execution. You won't build tutorial clones. You'll tackle real briefs, build deployable systems, and present your work to industry professionals." },
-  { q: "Will I get one-on-one mentorship?", a: "Yes. Individual mentorship sessions are built into the program structure. You'll have regular 1-on-1 time with experienced industry professionals in your specific track — not generic coaches." },
+  { q: "Will I actually build real projects?", a: "Yes. every track is built around real project execution. You won't build tutorial clones. You'll tackle real briefs, build deployable systems, and present your work to industry professionals." },
+  { q: "Will I get one-on-one mentorship?", a: "Yes. Individual mentorship sessions are built into the program structure. You'll have regular 1-on-1 time with experienced industry professionals in your specific track, not generic coaches." },
   { q: "Can I pay in installments?", a: "Yes. We offer a structured installment payment option. Reach out to our admissions team for plan details. Installment availability is subject to cohort availability." },
-  { q: "How practical is the curriculum really?", a: "Very. We spend less than 30% of program time on theory. The remaining 70% is active execution — building, presenting, iterating, and receiving feedback from industry professionals." },
+  { q: "How practical is the curriculum really?", a: "Very. We spend less than 30% of program time on theory. The remaining 70% is active execution, building, presenting, iterating, and receiving feedback from industry professionals." },
 ];

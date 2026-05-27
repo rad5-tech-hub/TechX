@@ -5,14 +5,13 @@ export default function TrustBanner() {
     <section className="py-14 border-y border-border" style={{ backgroundColor: PANEL }}>
       <div className="max-w-6xl mx-auto px-4 text-start">
         <p className="text-xs font-semibold uppercase tracking-widest mb-8" style={{ color: MUTED }}>
-          Backed by a decade of building real products, companies, and careers
+          Backed by decades of building real products, companies, and careers
         </p>
         <div className="flex flex-wrap justify-start gap-12 md:gap-20">
           {[
-            { n: "10+", l: "Years in the industry" },
-            { n: "500+", l: "Professionals trained" },
+            { n: "15+", l: "Years in the industry" },
+            { n: "100+", l: "Professionals trained" },
             { n: "20+", l: "Products shipped" },
-            { n: "3", l: "Tech hubs built" },
           ].map((s) => (
             <div key={s.l} className="text-center">
               <div

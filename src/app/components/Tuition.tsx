@@ -50,16 +50,15 @@ export default function Tuition() {
               50% OFF
             </div>
             <p className="text-sm mb-8" style={{ color: "rgba(255,255,255,0.7)" }}>
-              Limited scholarship slots awarded on merit and need. Apply early — slots fill fast.
+              Limited scholarship slots awarded on merit and need. Apply early, slots fill fast.
             </p>
             <ul className="space-y-3 mb-8">
               {[
-                "Everything in standard tuition",
                 "50% tuition waiver",
                 "Merit-based selection",
                 "Installment payment available",
                 "Priority cohort placement",
-                "Scholarship certificate awarded",
+                "Professional certificate awarded",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2 text-sm text-white">
                   <CheckCircle size={13} className="shrink-0 opacity-80" />
