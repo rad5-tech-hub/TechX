@@ -53,7 +53,7 @@ export default function ApplyForm() {
     setFormData({ ...formData, [name]: updatedValues });
   };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 4));
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, 6));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -117,15 +117,15 @@ export default function ApplyForm() {
 
         <div className="mb-12 text-center">
           <div className="flex justify-center gap-2 mb-6">
-            {[1, 2, 3, 4].map((s) => (
+            {[1, 2, 3, 4, 5, 6].map((s) => (
               <div 
                 key={s} 
-                className="h-1.5 w-12 rounded-full transition-all duration-500"
+                className="h-1.5 w-8 rounded-full transition-all duration-500"
                 style={{ backgroundColor: step >= s ? RED : 'rgba(255,255,255,0.1)' }}
               />
             ))}
           </div>
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: RED }}>Step {step} of 4</span>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: RED }}>Step {step} of 6</span>
           <h2
             className="mt-3 text-[clamp(2rem,5vw,3rem)] font-black text-white leading-tight uppercase"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -137,18 +137,26 @@ export default function ApplyForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {step === 1 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">A. Personal Information & B. Tech Background</h3>
+              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">A. Personal Information</h3>
               <div className="space-y-4">
-                <InputField label="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="John Doe" />
+                <InputField label="What is your full name?" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="John Doe" />
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <SelectField label="Age Range" name="ageRange" value={formData.ageRange} onChange={handleChange} options={["Below 18", "18 – 21", "22 – 25", "26 – 30", "31 – 35", "36 and Above"]} />
-                  <SelectField label="Gender" name="gender" value={formData.gender} onChange={handleChange} options={["Male", "Female", "Prefer not to say"]} />
+                  <SelectField label="What is your age range?" name="ageRange" value={formData.ageRange} onChange={handleChange} options={["Below 18", "18 – 21", "22 – 25", "26 – 30", "31 – 35", "36 and Above"]} />
+                  <SelectField label="What is your gender?" name="gender" value={formData.gender} onChange={handleChange} options={["Male", "Female", "Prefer not to say"]} />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <InputField label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="081 ..." type="tel" />
-                  <InputField label="Email Address" name="emailAddress" value={formData.emailAddress} onChange={handleChange} placeholder="name@example.com" type="email" />
+                  <InputField label="What is your phone number?" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="081 ..." type="tel" />
+                  <InputField label="What is your email address?" name="emailAddress" value={formData.emailAddress} onChange={handleChange} placeholder="name@example.com" type="email" />
                 </div>
-                <InputField label="City, Country" name="cityCountry" value={formData.cityCountry} onChange={handleChange} placeholder="Lagos, Nigeria" />
+                <InputField label="Which city and country do you reside in?" name="cityCountry" value={formData.cityCountry} onChange={handleChange} placeholder="Lagos, Nigeria" />
+              </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">B. Tech Background</h3>
+              <div className="space-y-4">
                 <SelectField label="How long have you been learning or practicing tech?" name="experienceDuration" value={formData.experienceDuration} onChange={handleChange} options={["1 – 3 Months", "3 – 6 Months", "6 – 9 Months", "9 – 12 Months", "12 – 18 Months", "18 – 24 Months", "2 – 3 Years", "3 – 4 Years", "4 – 5 Years", "5 Years and Above"]} />
                 <SelectField label="Where did you learn your tech skill(s)?" name="learningSource" value={formData.learningSource} onChange={handleChange} options={["Tech Hub Bootcamp", "Government-Sponsored Digital Program", "University / Polytechnic", "Self-Taught (YouTube, Coursera, Udemy, etc.)", "Internship / Workplace Experience", "Others"]} />
                 <SelectField label="What area of tech are you currently focused on?" name="techFocus" value={formData.techFocus} onChange={handleChange} options={["Software Development", "Product Design", "Product Management", "Data Analysis", "AI / Automation", "Digital Marketing", "Entrepreneurship / Startup", "Others"]} />
@@ -156,7 +164,7 @@ export default function ApplyForm() {
             </div>
           )}
 
-          {step === 2 && (
+          {step === 3 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">C. Program Readiness</h3>
               <div className="space-y-4">
@@ -164,22 +172,22 @@ export default function ApplyForm() {
                 <TextAreaField label="Why do you want to join this program?" name="whyJoin" value={formData.whyJoin} onChange={handleChange} />
                 <TextAreaField label="What do you hope to achieve after this program?" name="goals" value={formData.goals} onChange={handleChange} />
                 <SelectField label="Have you ever worked on any real project before?" name="realProject" value={formData.realProject} onChange={handleChange} options={["Yes", "No", "Currently Working on One"]} />
-                <div className="grid sm:grid-cols-3 gap-4">
-                  <SelectField label="Working Laptop?" name="laptop" value={formData.laptop} onChange={handleChange} options={["Yes", "No"]} />
-                  <SelectField label="Reliable Internet?" name="internet" value={formData.internet} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
-                  <SelectField label="Stable Power?" name="power" value={formData.power} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
+                <div className="grid grid-cols-1 gap-4">
+                  <SelectField label="Do you have a working laptop for the program?" name="laptop" value={formData.laptop} onChange={handleChange} options={["Yes", "No"]} />
+                  <SelectField label="Do you have access to a reliable internet connection?" name="internet" value={formData.internet} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
+                  <SelectField label="Do you have access to a stable power supply?" name="power" value={formData.power} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
                 </div>
               </div>
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">D. Learning Preference & E. Professional Readiness</h3>
+              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">D. Learning Preference</h3>
               <div className="space-y-4">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <SelectField label="Preferred Learning Format" name="learningFormat" value={formData.learningFormat} onChange={handleChange} options={["Physical", "Online", "Hybrid"]} />
-                  <SelectField label="12-week intensive commitment?" name="commitment" value={formData.commitment} onChange={handleChange} options={["Yes", "No"]} />
+                <div className="grid grid-cols-1 gap-4">
+                  <SelectField label="What is your preferred learning format?" name="learningFormat" value={formData.learningFormat} onChange={handleChange} options={["Physical", "Online", "Hybrid"]} />
+                  <SelectField label="Are you able to commit to the 12-week intensive program?" name="commitment" value={formData.commitment} onChange={handleChange} options={["Yes", "No"]} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-white">Are you available for:</label>
@@ -189,6 +197,14 @@ export default function ApplyForm() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {step === 5 && (
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">E. Professional Readiness</h3>
+              <div className="space-y-4">
                 <SelectField label="Which best describes your current stage?" name="currentStage" value={formData.currentStage} onChange={handleChange} options={["I’m still learning basics", "I have beginner knowledge but lack confidence", "I can build basic projects", "I’m trying to become job-ready", "I’m already working but want to grow faster"]} />
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-white">Do you currently have:</label>
@@ -202,15 +218,15 @@ export default function ApplyForm() {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 6 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">E. Final Commitment & F. Profile</h3>
+              <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">F. Final Commitment & Profile</h3>
               <div className="space-y-4">
                 <TextAreaField label="Why should you be selected for this program?" name="whySelected" value={formData.whySelected} onChange={handleChange} />
-                <SelectField label="Understand this is an intensive graduate program?" name="understanding" value={formData.understanding} onChange={handleChange} options={["Yes", "No"]} />
-                <InputField label="Portfolio Link" name="portfolioLink" value={formData.portfolioLink} onChange={handleChange} placeholder="https://..." />
-                <InputField label="LinkedIn Profile" name="linkedinLink" value={formData.linkedinLink} onChange={handleChange} placeholder="https://linkedin.com/in/..." />
-                <InputField label="GitHub/Behance Link" name="githubLink" value={formData.githubLink} onChange={handleChange} placeholder="https://..." />
+                <SelectField label="Do you understand that this is an intensive graduate program?" name="understanding" value={formData.understanding} onChange={handleChange} options={["Yes", "No"]} />
+                <InputField label="Please provide your portfolio link (if any)" name="portfolioLink" value={formData.portfolioLink} onChange={handleChange} placeholder="https://..." />
+                <InputField label="What is your LinkedIn profile URL?" name="linkedinLink" value={formData.linkedinLink} onChange={handleChange} placeholder="https://linkedin.com/in/..." />
+                <InputField label="What is your GitHub or Behance profile URL?" name="githubLink" value={formData.githubLink} onChange={handleChange} placeholder="https://..." />
               </div>
             </div>
           )}
@@ -226,7 +242,7 @@ export default function ApplyForm() {
               </button>
             )}
             
-            {step < 4 ? (
+            {step < 6 ? (
               <button
                 type="button"
                 onClick={nextStep}
@@ -268,7 +284,7 @@ const InputField = ({ label, name, value, onChange, placeholder, type = "text" }
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className="w-full p-4 rounded-xl border border-border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-red-500/50"
+      className="w-full p-4 rounded-xl border border-border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/50"
       style={{ backgroundColor: PANEL, color: FG, borderColor: "rgba(255,255,255,0.08)" }}
     />
   </div>
@@ -282,7 +298,7 @@ const SelectField = ({ label, name, value, onChange, options }: any) => (
       name={name}
       value={value}
       onChange={onChange}
-      className="w-full p-4 rounded-xl border border-border text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-red-500/50"
+      className="w-full p-4 rounded-xl border border-border text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/50"
       style={{ backgroundColor: PANEL, color: FG, borderColor: "rgba(255,255,255,0.08)" }}
     >
       <option value="" disabled>Select an option</option>
@@ -301,7 +317,7 @@ const TextAreaField = ({ label, name, value, onChange }: any) => (
       placeholder="Write here..."
       value={value}
       onChange={onChange}
-      className="w-full p-4 rounded-xl border border-border text-sm focus:outline-none resize-none focus:ring-2 focus:ring-red-500/50"
+      className="w-full p-4 rounded-xl border border-border text-sm focus:outline-none resize-none focus:ring-2 focus:ring-blue-500/50"
       style={{ backgroundColor: PANEL, color: FG, borderColor: "rgba(255,255,255,0.08)" }}
     />
   </div>
@@ -313,7 +329,7 @@ const Checkbox = ({ label, checked, onChange }: any) => (
       type="checkbox" 
       checked={checked} 
       onChange={onChange}
-      className="w-4 h-4 rounded border-white/20 bg-transparent text-red-500 focus:ring-red-500" 
+      className="w-4 h-4 rounded border-white/20 bg-transparent text-blue-500 focus:ring-blue-500" 
     />
     <span className="text-xs text-white/80">{label}</span>
   </label>

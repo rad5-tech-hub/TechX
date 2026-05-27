@@ -33,12 +33,12 @@ export default function App() {
               <Tracks />
               <WhyRad5 />
               <LearningExperience />
+              <ApplicationTimeline />
               <WhoShouldApply />
               <ProgramBenefits />
               <StudentExperience />
               <Tuition />
               <Testimonials />
-              <ApplicationTimeline />
               <FAQ />
               <FinalCTA />
             </>

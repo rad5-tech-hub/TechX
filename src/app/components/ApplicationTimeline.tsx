@@ -20,7 +20,7 @@ const ApplicationTimeline = () => {
   ];
 
   return (
-    <section className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
+    <section className="pt-10 pb-20 px-4 md:px-8 max-w-6xl mx-auto">
       <div className="flex flex-col lg:flex-row gap-16">
         {/* Schedule Table */}
         <div className="flex-1">
