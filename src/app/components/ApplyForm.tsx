@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import {Turnstile} from '@marsidev/react-turnstile';
 import { NAVY, RED, BLUE, MUTED, PANEL, FG } from "../constants";
 
 export default function ApplyForm() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    fullName: '',
-    ageRange: '',
+    firstname: '',
+    lastname: '',
+    age_range: '',
     gender: '',
-    phoneNumber: '',
-    emailAddress: '',
-    cityCountry: '',
-    experienceDuration: '',
-    learningSource: '',
-    techFocus: '',
-    preferredProgram: '',
-    whyJoin: '',
-    goals: '',
-    realProject: '',
-    laptop: '',
-    internet: '',
-    power: '',
+    phone: '',
+    email: '',
+    city: '',
+    tech_duration: '',
+    tech_skill: '',
+    tech_area: '',
+    prog_track: '',
+    prog_reason: '',
+    prog_goal: '',
+    workedOnProject: '',
+    workingLaptop: '',
+    internetAccess: '',
+    powerAccess: '',
     learningFormat: '',
-    commitment: '',
+    committment: '',
     availability: [] as string[],
-    currentStage: '',
-    assets: [] as string[],
-    whySelected: '',
-    understanding: '',
-    portfolioLink: '',
-    linkedinLink: '',
-    githubLink: '',
+    current_stage: '',
+    personal_profile: [] as string[],
+    application_statement: '',
+    acknowledgment: false,
+    portfolio_link: '',
+    linkedin_link: '',
+    github_link: '',
+    source_of_lead: '',
   });
+
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [remoteIp, setRemoteIp] = useState('');
+  const [apiMessage, setApiMessage] = useState('');
 
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -41,39 +48,106 @@ export default function ApplyForm() {
     window.scrollTo(0, 0);
   }, [step]);
 
+  useEffect(() => {
+    // Retrieve client IP for the webhook payload
+    fetch('https://api.ipify.org?format=json')
+        .then(res => res.json())
+        .then(data => setRemoteIp(data.ip))
+        .catch(() => setRemoteIp('0.0.0.0'));
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+    if (type === 'checkbox') {
+        const { checked } = e.target as HTMLInputElement;
+        setFormData({ ...formData, [name]: checked });
+    } else {
+        setFormData({ ...formData, [name]: value });
+    }
   };
 
-  const handleCheckboxChange = (name: 'availability' | 'assets', value: string) => {
-    const currentValues = formData[name];
+  const handleArrayChange = (name: 'availability' | 'personal_profile', value: string) => {
+    const currentValues = formData[name] as string[];
     const updatedValues = currentValues.includes(value)
       ? currentValues.filter((v) => v !== value)
       : [...currentValues, value];
     setFormData({ ...formData, [name]: updatedValues });
   };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 6));
+  const isStepValid = () => {
+    switch (step) {
+      case 1:
+        return formData.firstname && formData.lastname && formData.age_range && formData.gender && formData.phone && formData.email && formData.city;
+      case 2:
+        return formData.tech_duration && formData.tech_skill && formData.tech_area;
+      case 3:
+        return (
+          formData.prog_track && formData.prog_reason && formData.prog_goal && 
+          formData.workedOnProject && formData.workingLaptop && formData.internetAccess && formData.powerAccess
+        );
+      case 4:
+        return formData.learningFormat && formData.committment && formData.availability.length > 0;
+      case 5:
+        return formData.current_stage && formData.personal_profile.length > 0;
+      case 6:
+        return formData.application_statement && formData.acknowledgment && formData.source_of_lead;
+      default:
+        return true;
+    }
+  };
+
+  const nextStep = () => {
+    if (isStepValid()) {
+      setStep((prev) => Math.min(prev + 1, 6));
+      setApiMessage('');
+      if (status === 'error') setStatus('idle');
+    } else {
+      setApiMessage('Please complete all fields in this section to continue.');
+      setStatus('error');
+    }
+  };
+
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      setStatus('error');
+      setApiMessage('Please complete the Turnstile verification.');
+      return;
+    }
+
     setStatus('loading');
 
     try {
-      // Save to local storage for now
-      localStorage.setItem('techx_application', JSON.stringify({
+      const payload = {
         ...formData,
-        submittedAt: new Date().toISOString()
-      }));
-      
-      // Simulate a small delay for UX
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      setStatus('success');
+        turnstileToken,
+        remoteIp
+      };
+
+      const response = await fetch(import.meta.env.VITE_TECHX_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': import.meta.env.VITE_TECHX_AUTH_TOKEN
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+        setApiMessage(result.message || 'Error submitting application.');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       setStatus('error');
+      setApiMessage('Connection failed. Please check your internet.');
     }
   };
 
@@ -86,7 +160,7 @@ export default function ApplyForm() {
           </div>
           <h2 className="text-3xl font-black text-white mb-4" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>Application Received!</h2>
           <p className="text-sm leading-relaxed mb-8" style={{ color: MUTED }}>
-            Thank you for your interest in the RAD5 TechX Graduate Program. Our team will review your application and get back to you within 48 hours.
+            Your application has been completed. You will receive an email shortly.
           </p>
           <button 
             onClick={() => window.location.href = '/'}
@@ -139,16 +213,20 @@ export default function ApplyForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">A. Personal Information</h3>
               <div className="space-y-4">
-                <InputField label="What is your full name?" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="John Doe" />
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <SelectField label="What is your age range?" name="ageRange" value={formData.ageRange} onChange={handleChange} options={["Below 18", "18 – 21", "22 – 25", "26 – 30", "31 – 35", "36 and Above"]} />
+                  <InputField label="First Name" name="firstname" value={formData.firstname} onChange={handleChange} placeholder="John" />
+                  <InputField label="Last Name" name="lastname" value={formData.lastname} onChange={handleChange} placeholder="Doe" />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <SelectField label="What is your age range?" name="age_range" value={formData.age_range} onChange={handleChange} options={["Below 18", "18 – 21", "22 – 25", "26 – 30", "31 – 35", "36 and Above"]} />
                   <SelectField label="What is your gender?" name="gender" value={formData.gender} onChange={handleChange} options={["Male", "Female", "Prefer not to say"]} />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <InputField label="What is your phone number?" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="081 ..." type="tel" />
-                  <InputField label="What is your email address?" name="emailAddress" value={formData.emailAddress} onChange={handleChange} placeholder="name@example.com" type="email" />
+                  <InputField label="What is your phone number?" name="phone" value={formData.phone} onChange={handleChange} placeholder="+23480 ..." type="tel" />
+                  <InputField label="What is your email address?" name="email" value={formData.email} onChange={handleChange} placeholder="name@example.com" type="email" />
                 </div>
-                <InputField label="Which city and country do you reside in?" name="cityCountry" value={formData.cityCountry} onChange={handleChange} placeholder="Lagos, Nigeria" />
+                <InputField label="Which city and country do you reside in?" name="city" value={formData.city} onChange={handleChange} placeholder="Lagos, Nigeria" />                
+              
               </div>
             </div>
           )}
@@ -157,9 +235,9 @@ export default function ApplyForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">B. Tech Background</h3>
               <div className="space-y-4">
-                <SelectField label="How long have you been learning or practicing tech?" name="experienceDuration" value={formData.experienceDuration} onChange={handleChange} options={["1 – 3 Months", "3 – 6 Months", "6 – 9 Months", "9 – 12 Months", "12 – 18 Months", "18 – 24 Months", "2 – 3 Years", "3 – 4 Years", "4 – 5 Years", "5 Years and Above"]} />
-                <SelectField label="Where did you learn your tech skill(s)?" name="learningSource" value={formData.learningSource} onChange={handleChange} options={["Tech Hub Bootcamp", "Government-Sponsored Digital Program", "University / Polytechnic", "Self-Taught (YouTube, Coursera, Udemy, etc.)", "Internship / Workplace Experience", "Others"]} />
-                <SelectField label="What area of tech are you currently focused on?" name="techFocus" value={formData.techFocus} onChange={handleChange} options={["Software Development", "Product Design", "Product Management", "Data Analysis", "AI / Automation", "Digital Marketing", "Entrepreneurship / Startup", "Others"]} />
+                <SelectField label="How long have you been learning or practicing tech?" name="tech_duration" value={formData.tech_duration} onChange={handleChange} options={["1 – 3 Months", "3 – 6 Months", "6 – 9 Months", "9 – 12 Months", "12 – 18 Months", "18 – 24 Months", "2 – 3 Years", "3 – 4 Years", "4 – 5 Years", "5 Years and Above"]} />
+                <SelectField label="Where did you learn your tech skill(s)?" name="tech_skill" value={formData.tech_skill} onChange={handleChange} options={["Tech Hub Bootcamp", "Government-Sponsored Digital Program (3MTT, TechRise, etc.)", "University / Polytechnic", "Self-Taught (YouTube, Coursera, Udemy, etc.)", "Internship / Workplace Experience", "Others"]} />
+                <SelectField label="What area of tech are you currently focused on?" name="tech_area" value={formData.tech_area} onChange={handleChange} options={["Software Development", "Product Design", "Product Management", "Data Analysis", "AI / Automation", "Digital Marketing", "Entrepreneurship / Startup", "Others"]} />
               </div>
             </div>
           )}
@@ -168,14 +246,14 @@ export default function ApplyForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">C. Program Readiness</h3>
               <div className="space-y-4">
-                <SelectField label="Which RAD5 TechX Graduate Program are you applying for?" name="preferredProgram" value={formData.preferredProgram} onChange={handleChange} options={["Backend Web Engineering Mastery", "AI Marketing & Automation Mastery", "GenAI for Data Analysis & BI Mastery", "Advanced Product Management & Strategy Mastery", "Entrepreneurship & Startup Development Mastery"]} />
-                <TextAreaField label="Why do you want to join this program?" name="whyJoin" value={formData.whyJoin} onChange={handleChange} />
-                <TextAreaField label="What do you hope to achieve after this program?" name="goals" value={formData.goals} onChange={handleChange} />
-                <SelectField label="Have you ever worked on any real project before?" name="realProject" value={formData.realProject} onChange={handleChange} options={["Yes", "No", "Currently Working on One"]} />
+                <SelectField label="Which RAD5 TechX Graduate Program are you applying for?" name="prog_track" value={formData.prog_track} onChange={handleChange} options={["Backend Web Engineering Mastery", "AI Marketing & Automation Mastery", "GenAI for Data Analysis & BI Mastery", "Advanced Product Management & Strategy Mastery", "Entrepreneurship & Startup Development Mastery"]} />
+                <TextAreaField label="Why do you want to join this program?" name="prog_reason" value={formData.prog_reason} onChange={handleChange} />
+                <TextAreaField label="What do you hope to achieve after this program?" name="prog_goal" value={formData.prog_goal} onChange={handleChange} />
+                <SelectField label="Have you ever worked on any real project before?" name="workedOnProject" value={formData.workedOnProject} onChange={handleChange} options={["Yes", "No", "Currently-working"]} />
                 <div className="grid grid-cols-1 gap-4">
-                  <SelectField label="Do you have a working laptop for the program?" name="laptop" value={formData.laptop} onChange={handleChange} options={["Yes", "No"]} />
-                  <SelectField label="Do you have access to a reliable internet connection?" name="internet" value={formData.internet} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
-                  <SelectField label="Do you have access to a stable power supply?" name="power" value={formData.power} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
+                  <SelectField label="Do you have a working laptop for the program?" name="workingLaptop" value={formData.workingLaptop} onChange={handleChange} options={["Yes", "No"]} />
+                  <SelectField label="Do you have access to a reliable internet connection?" name="internetAccess" value={formData.internetAccess} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
+                  <SelectField label="Do you have access to a stable power supply?" name="powerAccess" value={formData.powerAccess} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
                 </div>
               </div>
             </div>
@@ -187,13 +265,13 @@ export default function ApplyForm() {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 gap-4">
                   <SelectField label="What is your preferred learning format?" name="learningFormat" value={formData.learningFormat} onChange={handleChange} options={["Physical", "Online", "Hybrid"]} />
-                  <SelectField label="Are you able to commit to the 12-week intensive program?" name="commitment" value={formData.commitment} onChange={handleChange} options={["Yes", "No"]} />
+                  <SelectField label="Are you able to commit to the 12-week intensive program?" name="committment" value={formData.committment} onChange={handleChange} options={["Yes", "No"]} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-white">Are you available for:</label>
                   <div className="grid grid-cols-2 gap-2">
                     {["Evening Classes", "Weekend Sessions", "Mentorship Sessions", "Group Projects", "Presentations & Demo Days"].map(opt => (
-                      <Checkbox key={opt} label={opt} checked={formData.availability.includes(opt)} onChange={() => handleCheckboxChange('availability', opt)} />
+                      <Checkbox key={opt} label={opt} checked={formData.availability.includes(opt)} onChange={() => handleArrayChange('availability', opt)} />
                     ))}
                   </div>
                 </div>
@@ -205,12 +283,12 @@ export default function ApplyForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">E. Professional Readiness</h3>
               <div className="space-y-4">
-                <SelectField label="Which best describes your current stage?" name="currentStage" value={formData.currentStage} onChange={handleChange} options={["I’m still learning basics", "I have beginner knowledge but lack confidence", "I can build basic projects", "I’m trying to become job-ready", "I’m already working but want to grow faster"]} />
+                <SelectField label="Which best describes your current stage?" name="current_stage" value={formData.current_stage} onChange={handleChange} options={["I’m still learning basics", "I have beginner knowledge but lack confidence", "I can build basic projects", "I’m trying to become job-ready", "I’m already working but want to grow faster"]} />
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-white">Do you currently have:</label>
                   <div className="grid grid-cols-2 gap-2">
                     {["A portfolio", "A CV/Resume", "LinkedIn profile", "GitHub/Behance account", "None yet"].map(opt => (
-                      <Checkbox key={opt} label={opt} checked={formData.assets.includes(opt)} onChange={() => handleCheckboxChange('assets', opt)} />
+                      <Checkbox key={opt} label={opt} checked={formData.personal_profile.includes(opt)} onChange={() => handleArrayChange('personal_profile', opt)} />
                     ))}
                   </div>
                 </div>
@@ -222,11 +300,27 @@ export default function ApplyForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">F. Final Commitment & Profile</h3>
               <div className="space-y-4">
-                <TextAreaField label="Why should you be selected for this program?" name="whySelected" value={formData.whySelected} onChange={handleChange} />
-                <SelectField label="Do you understand that this is an intensive graduate program?" name="understanding" value={formData.understanding} onChange={handleChange} options={["Yes", "No"]} />
-                <InputField label="Please provide your portfolio link (if any)" name="portfolioLink" value={formData.portfolioLink} onChange={handleChange} placeholder="https://..." />
-                <InputField label="What is your LinkedIn profile URL?" name="linkedinLink" value={formData.linkedinLink} onChange={handleChange} placeholder="https://linkedin.com/in/..." />
-                <InputField label="What is your GitHub or Behance profile URL?" name="githubLink" value={formData.githubLink} onChange={handleChange} placeholder="https://..." />
+                <TextAreaField label="Why should you be selected for this program?" name="application_statement" value={formData.application_statement} onChange={handleChange} />
+                <InputField label="Please provide your portfolio link (if any)" name="portfolio_link" value={formData.portfolio_link} onChange={handleChange} placeholder="https://..." />
+                <InputField label="What is your LinkedIn profile URL?" name="linkedin_link" value={formData.linkedin_link} onChange={handleChange} placeholder="https://linkedin.com/in/..." />
+                <InputField label="What is your GitHub or Behance profile URL?" name="github_link" value={formData.github_link} onChange={handleChange} placeholder="https://..." />
+                <SelectField label="How did you hear about this program?" name="source_of_lead" value={formData.source_of_lead} onChange={handleChange} options={["Facebook Ad", "Facebook Post", "Google Search", "Handbill", "Instagram", "Radio", "Word-of-Mouth", "Billboard", "AI", "LinkedIn", "WhatsApp Group", "Blog Website", "Referral / Friend", "RAD5 Website", "Others"]} />
+                
+                <label className="flex items-start gap-3 p-4 rounded-xl border border-white/5" style={{ backgroundColor: PANEL }}>
+                    <input 
+                        name="acknowledgment" 
+                        type="checkbox" 
+                        checked={formData.acknowledgment}
+                        onChange={handleChange} 
+                        required 
+                        className="mt-1"
+                    />
+                    <span className="text-xs text-white/70 font-bold uppercase tracking-wider">I understand that this is an intensive, practical, mentorship-driven graduate program and not a beginner bootcamp.</span>
+                </label>
+              </div>
+
+              <div className="flex justify-center py-4">
+                <Turnstile siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY} onSuccess={setTurnstileToken} />
               </div>
             </div>
           )}
@@ -265,7 +359,7 @@ export default function ApplyForm() {
 
           {status === 'error' && (
             <p className="text-center text-xs" style={{ color: RED }}>
-              Something went wrong. Please try again or contact support.
+              {apiMessage || 'Something went wrong. Please try again or contact support.'}
             </p>
           )}
         </form>
