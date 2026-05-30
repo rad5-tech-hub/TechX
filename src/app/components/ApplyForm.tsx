@@ -235,7 +235,7 @@ export default function ApplyForm() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-lg font-bold text-white border-l-4 border-red-500 pl-4">B. Tech Background</h3>
               <div className="space-y-4">
-                <SelectField label="How long have you been learning or practicing tech?" name="tech_duration" value={formData.tech_duration} onChange={handleChange} options={["1 – 3 Months", "3 – 6 Months", "6 – 9 Months", "9 – 12 Months", "12 – 18 Months", "18 – 24 Months", "2 – 3 Years", "3 – 4 Years", "4 – 5 Years", "5 Years and Above"]} />
+                <SelectField label="How long have you been learning or practicing tech?" name="tech_duration" value={formData.tech_duration} onChange={handleChange} options={["1 – 3 Months", "4 – 6 Months", "7 – 9 Months", "10 – 12 Months", "13 – 18 Months", "19 – 24 Months", "2 – 3 Years", "4 – 5 Years", "5 Years and Above"]} />
                 <SelectField label="Where did you learn your tech skill(s)?" name="tech_skill" value={formData.tech_skill} onChange={handleChange} options={["Tech Hub Bootcamp", "Government-Sponsored Digital Program (3MTT, TechRise, etc.)", "University / Polytechnic", "Self-Taught (YouTube, Coursera, Udemy, etc.)", "Internship / Workplace Experience", "Others"]} />
                 <SelectField label="What area of tech are you currently focused on?" name="tech_area" value={formData.tech_area} onChange={handleChange} options={["Software Development", "Product Design", "Product Management", "Data Analysis", "AI / Automation", "Digital Marketing", "Entrepreneurship / Startup", "Others"]} />
               </div>
@@ -252,8 +252,8 @@ export default function ApplyForm() {
                 <SelectField label="Have you ever worked on any real project before?" name="workedOnProject" value={formData.workedOnProject} onChange={handleChange} options={["Yes", "No", "Currently-working"]} />
                 <div className="grid grid-cols-1 gap-4">
                   <SelectField label="Do you have a working laptop for the program?" name="workingLaptop" value={formData.workingLaptop} onChange={handleChange} options={["Yes", "No"]} />
-                  <SelectField label="Do you have access to a reliable internet connection?" name="internetAccess" value={formData.internetAccess} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
-                  <SelectField label="Do you have access to a stable power supply?" name="powerAccess" value={formData.powerAccess} onChange={handleChange} options={["Yes", "No", "Sometimes"]} />
+                  <SelectField label="Do you have access to a reliable internet connection?" name="internetAccess" value={formData.internetAccess} onChange={handleChange} options={["Yes", "No"]} />
+                  <SelectField label="Do you have access to a stable power supply?" name="powerAccess" value={formData.powerAccess} onChange={handleChange} options={["Yes", "No"]} />
                 </div>
               </div>
             </div>
