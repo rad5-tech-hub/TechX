@@ -270,7 +270,7 @@ export default function ApplyForm() {
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-white">Are you available for:</label>
                   <div className="grid grid-cols-2 gap-2">
-                    {["Evening Classes", "Weekend Sessions", "Mentorship Sessions", "Group Projects", "Presentations & Demo Days"].map(opt => (
+                    {["Morning Classes", "Evening Classes", "Weekend Sessions", "Mentorship Sessions", "Group Projects", "Presentations & Demo Days"].map(opt => (
                       <Checkbox key={opt} label={opt} checked={formData.availability.includes(opt)} onChange={() => handleArrayChange('availability', opt)} />
                     ))}
                   </div>
